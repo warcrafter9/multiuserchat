@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Серверное приложение
+ * Клиентское приложение
  */
 public class ClientApp extends JFrame implements ActionListener, TCPConnectionListener {
     private final JTextArea log = new JTextArea();
@@ -64,7 +64,7 @@ public class ClientApp extends JFrame implements ActionListener, TCPConnectionLi
     @Override
     public void actionPerformed(ActionEvent e) {
         String message = fieldInput.getText();
-        if (message.isEmpty()) {
+        if (message.isEmpty()) {//при вводе пустой строки
         } else {
             fieldInput.setText(null);
             tcpConnection.sendMessage(nickname.getText() + ": " + message);
@@ -107,8 +107,6 @@ public class ClientApp extends JFrame implements ActionListener, TCPConnectionLi
     @Override
     public void onException(TCPConnection tcpConnection, Exception exception) {
         printMsg("Исключение: " + exception);
-        SwingUtilities.invokeLater(() -> {
-            JOptionPane.showMessageDialog(this, "Произошла ошибка: " + exception.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
-        });
+        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, "Произошла ошибка: " + exception.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE));
     }
 }
